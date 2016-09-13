@@ -23,16 +23,16 @@ export WRFIO_NCD_LARGE_FILE_SUPPORT=1
 echo "--------------------------------"
 echo "Compiling WRF..."
 cd $WRF
-./configure
-./compile -j [[[#CPUS]]] wrf 2>&1 wrf_compile.log
-./compile em_real 2>&1 em_real_compile.log
+./configure > wrf_configure.log 2>&1
+./compile -j [[[#CPUS]]] wrf > wrf_compile.log 2>&1
+./compile em_real > em_real_compile.log 2>&1
 
 # WPS compile
 echo "--------------------------------"
 echo "Compiling WPS..."
 cd $WPS
-./configure
-./compile 2>&1 wps_compile.log
+./configure > wrf_configure.log 2>&1
+./compile > wps_compile.log 2>&1
 
 echo "--------------------------------"
 echo "================================"
