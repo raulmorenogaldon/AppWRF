@@ -8,14 +8,11 @@ echo "--------------------------------"
 icc -v >& /dev/null
 if [ $? -eq 0 ]; then
 	echo "Compiler is Intel"
-	COMPILER=intel
+	export COMPILER=intel
 else
 	echo "Compiler is GNU"
-	COMPILER=gnu
+	export COMPILER=gnu
 fi
-
-# Error checking
-set -e
 
 # Set env
 echo "--------------------------------"

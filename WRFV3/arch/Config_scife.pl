@@ -393,7 +393,10 @@ until ( $validresponse ) {
   $opt -- ;
 
   printf "\nEnter selection [%d-%d] : ",1,$opt ;
-  $response = "34" ;
+  if ( $compiler = "intel" )
+  { $response = "14" ; }
+  else
+  { $response = "34" ; }
 
   if ( $response == -1 ) { exit ; }
 
