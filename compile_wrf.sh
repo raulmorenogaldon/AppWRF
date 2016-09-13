@@ -28,14 +28,14 @@ echo "Compiling WRF..."
 cd $WRF
 ./configure
 ./compile -j [[[#CPUS]]] wrf
-./compile -j [[[#CPUS]]] em_real
+./compile em_real
 
 # WPS compile
 echo "--------------------------------"
 echo "Compiling WPS..."
 cd $WPS
 ./configure
-./compile -j [[[#CPUS]]]
+./compile
 
 echo "--------------------------------"
 echo "================================"
