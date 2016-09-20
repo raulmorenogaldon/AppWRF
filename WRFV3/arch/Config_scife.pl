@@ -392,11 +392,12 @@ until ( $validresponse ) {
 
   $opt -- ;
 
-  printf "\nEnter selection [%d-%d] : ",1,$opt ;
-  if ( $compiler = "intel" )
+  #printf "\nEnter selection [%d-%d] : ",1,$opt ;
+  if ( $compiler eq 'intel' )
   { $response = 16 ; }
   else
   { $response = 35 ; }
+  printf "\nSelection : %d", $response ;
 
   if ( $response == -1 ) { exit ; }
 
@@ -650,6 +651,7 @@ while ( <CONFIGURE_DEFAULTS> )
                printf "Compile for nesting? (1=basic, 2=preset moves, 3=vortex following) [default 1]: " ;
              }
              $response = 1 ;
+			 printf "Selected : %d", $response;
              # $response = <STDIN> ;
           } 
           printf "\n" ;
