@@ -649,7 +649,8 @@ while ( <CONFIGURE_DEFAULTS> )
              } else {
                printf "Compile for nesting? (1=basic, 2=preset moves, 3=vortex following) [default 1]: " ;
              }
-             $response = <STDIN> ;
+             $response = 1 ;
+             # $response = <STDIN> ;
           } 
           printf "\n" ;
           lc $response ;
