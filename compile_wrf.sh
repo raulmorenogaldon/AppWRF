@@ -39,6 +39,11 @@ cd $WPS
 ./configure > wrf_configure.log 2>&1
 ./compile > wps_compile.log 2>&1
 
+# Move namelists
+echo "--------------------------------"
+echo "Copying namelist.wps..."
+cp ../namelist.wps .
+
 echo "--------------------------------"
 echo "================================"
 
