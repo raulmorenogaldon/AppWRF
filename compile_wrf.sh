@@ -18,6 +18,8 @@ fi
 echo "--------------------------------"
 echo "Setting WRFIO_NCD_LARGE_FILE_SUPPORT..."
 export WRFIO_NCD_LARGE_FILE_SUPPORT=1
+echo "Setting MPI_LIB..."
+export MPI_LIB=-L/$MPI_LIB
 
 # WRF compile
 echo "--------------------------------"
