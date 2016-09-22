@@ -21,6 +21,9 @@ export WRFIO_NCD_LARGE_FILE_SUPPORT=1
 echo "Setting MPI_LIB..."
 export MPI_LIB=-L/$MPI_LIB
 
+# Set error trap
+set -e
+
 # WRF compile
 echo "--------------------------------"
 echo "Compiling WRF..."
