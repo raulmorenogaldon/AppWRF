@@ -13,6 +13,7 @@ echo "--------------------------------"
 echo "Extracting static geographic data..."
 cd [[[#INPUTPATH]]]
 tar jxf *.tar.bz2
+rm *.tar.bz2
 
 # Execute geogrid
 echo "--------------------------------"
@@ -28,7 +29,7 @@ ln -s ungrib/Variable_Tables/Vtable.GFS Vtable
 # Ungrib files
 echo "--------------------------------"
 echo "Executing ungrib..."
-./link_grib.exe [[[#INPUTPATH]]]
+./link_grib.csh [[[#INPUTPATH]]]
 ./ungrib.exe
 
 # Metgrid
