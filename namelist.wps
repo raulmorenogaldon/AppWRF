@@ -38,7 +38,7 @@
  truelat1  =  30.0,
  truelat2  =  60.0,
  stand_lon = -98.0,
- geog_data_path = '[[[#INPUTDATA]]]/WPS_GEOG/'
+ geog_data_path = '[[[#INPUTDATA]]]/'
 /
 
 &ungrib
