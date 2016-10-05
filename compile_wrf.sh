@@ -29,6 +29,7 @@ echo "--------------------------------"
 echo "Setup environment..."
 . ./configure_env.env
 ./setup.sh $CFG_CENTER_LAT $CFG_CENTER_LON 100 $CFG_BOUNDS_HEIGHT $CFG_BOUNDS_WIDTH $CFG_DATE_INI"_"$CFG_HOUR_INI $CFG_DATE_END"_"$CFG_HOUR_END $CFG_INPUTPATH
+. ./BOUNDS.env
 
 # Extract geographic data from input
 echo "--------------------------------"
@@ -58,6 +59,8 @@ echo "Copying namelist.wps ..."
 cp ../namelist.wps .
 
 # Download GRIB files into WPS folder
+echo "--------------------------------"
+echo "Downloading GRIB files..."
 ../download_gfs.sh $CFG_DATE_INI $CFG_HOUR_INI $CFG_DATE_END $CFG_HOUR_END $CFG_BOUNDS_L_LON $CFG_BOUNDS_R_LON $CFG_BOUNDS_T_LAT $CFG_BOUNDS_B_LAT
 
 # Execute geogrid
