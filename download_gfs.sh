@@ -42,7 +42,7 @@ do
 
 	# Download file
 	p=`printf "%03i" $i`
-	wget -O GRIB${DATE_CURR} "http://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl?file=gfs.t${ZHOUR_INI}""z.pgrb2.0p25.f$p&all_lev=on&all_var=on&subregion=&leftlon=${LEFT_LON}&rightlon=${RIGHT_LON}&toplat=${TOP_LAT}&bottomlat=${BOTTOM_LAT}&dir=%2Fgfs.${ZDATE_INI}"
+	wget -nv -O GRIB${DATE_CURR} "http://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl?file=gfs.t${ZHOUR_INI}""z.pgrb2.0p25.f$p&all_lev=on&all_var=on&subregion=&leftlon=${LEFT_LON}&rightlon=${RIGHT_LON}&toplat=${TOP_LAT}&bottomlat=${BOTTOM_LAT}&dir=%2Fgfs.${ZDATE_INI}"
 
 	# Increase 3 hours
 	let EPOCH_CURR=$(date -d @$EPOCH_CURR +%s)+$DELTA_SEC
