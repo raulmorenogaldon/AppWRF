@@ -118,25 +118,25 @@ def generate(domains, inputpath):
             i_parent = i_parent + "{0}, ".format(ij[0])
             j_parent = j_parent + "{0}, ".format(ij[1])
 
-        # Fill template
-        namelist = NAMELIST_WPS.format(
-            num_dom,
-            start_date,
-            end_date,
-            gx,
-            gy,
-            size_x,
-            size_y,
-            proj,
-            lat,
-            lon,
-            geo_res,
-            parent_ids,
-            parent_ratios,
-            i_parent,
-            j_parent,
-            inputpath
-        )
+    # Fill template
+    namelist = NAMELIST_WPS.format(
+        num_dom,
+        start_date,
+        end_date,
+        gx,
+        gy,
+        size_x,
+        size_y,
+        proj,
+        lat,
+        lon,
+        geo_res,
+        parent_ids,
+        parent_ratios,
+        i_parent,
+        j_parent,
+        inputpath
+    )
 
-        return namelist
+    return namelist
 
