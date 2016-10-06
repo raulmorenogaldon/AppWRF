@@ -5,7 +5,7 @@ import domain
 import latlon
 import namelist_wps
 from math import *
-	
+
 # Begin
 # Get center coordinates
 lat = float(sys.argv[1])
@@ -46,10 +46,10 @@ export CFG_BOUNDS_L_LON={1}
 export CFG_BOUNDS_B_LAT={2}
 export CFG_BOUNDS_R_LON={3}
 """.format(
-	max(third_dom['t_lat']+1.0, 90.0),
-	min(third_dom['l_lon']-1.0, -180.0),
-	min(third_dom['b_lat']-1.0, -90.0),
-	max(third_dom['r_lon']+1.0, 180.0)
+	min(third_dom['t_lat']+1.0, 90.0),
+	max(third_dom['l_lon']-1.0, -180.0),
+	max(third_dom['b_lat']-1.0, -90.0),
+	min(third_dom['r_lon']+1.0, 180.0)
 ))
 f.close()
 
