@@ -104,19 +104,19 @@ def generate(domains, inputpath):
             ratio = float(domains[grid_id-2]['res']/dom['res'])
             if ratio % 1 != 0.0:
                 print "Warning: Domain", grid_id,"ratio is not rounded = ", ratio
-                ratio = int(ratio)
                 ij = get_ij(dom, domains[grid_id-2])
                 parent_ids = parent_ids + str(grid_id-1) + ", "
+            ratio = int(ratio)
 
-            # Fill
-            start_date = start_date + "'{0}', ".format(dom['date_ini'])
-            end_date = end_date + "'{0}', ".format(dom['date_end'])
-            gx = gx + str(dom['grid_x']) + ", "
-            gy = gy + str(dom['grid_y']) + ", "
-            geo_res = geo_res + "'2deg+gtopo_10m+usgs_10m+10m+nesdis_greenfrac', "
-            parent_ratios = parent_ratios + str(ratio) + ", "
-            i_parent = i_parent + "{0}, ".format(ij[0])
-            j_parent = j_parent + "{0}, ".format(ij[1])
+        # Fill
+        start_date = start_date + "'{0}', ".format(dom['date_ini'])
+        end_date = end_date + "'{0}', ".format(dom['date_end'])
+        gx = gx + str(dom['grid_x']) + ", "
+        gy = gy + str(dom['grid_y']) + ", "
+        geo_res = geo_res + "'2deg+gtopo_10m+usgs_10m+10m+nesdis_greenfrac', "
+        parent_ratios = parent_ratios + str(ratio) + ", "
+        i_parent = i_parent + "{0}, ".format(ij[0])
+        j_parent = j_parent + "{0}, ".format(ij[1])
 
     # Fill template
     namelist = NAMELIST_WPS.format(
