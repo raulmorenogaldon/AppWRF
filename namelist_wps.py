@@ -104,9 +104,9 @@ def generate(domains, inputpath):
             ratio = float(domains[grid_id-2]['res']/dom['res'])
             if ratio % 1 != 0.0:
                 print "Warning: Domain", grid_id,"ratio is not rounded = ", ratio
-                ij = get_ij(dom, domains[grid_id-2])
-                parent_ids = parent_ids + str(grid_id-1) + ", "
             ratio = int(ratio)
+            parent_ids = parent_ids + str(grid_id-1) + ", "
+            ij = get_ij(dom, domains[grid_id-2])
 
         # Fill
         start_date = start_date + "'{0}', ".format(dom['date_ini'])
