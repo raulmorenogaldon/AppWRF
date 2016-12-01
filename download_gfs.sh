@@ -11,11 +11,11 @@ i=0
 while [ $EPOCH_CURR -le $EPOCH_END  ]
 do
 	# Date
-	YEAR_CURR=$(date -d @$EPOCH_CURR +%Y)
-	MONTH_CURR=$(date -d @$EPOCH_CURR +%m)
-	DAY_CURR=$(date -d @$EPOCH_CURR +%d)
-	HOUR_CURR=$(date -d @$EPOCH_CURR +%H)
-	DATE_CURR=$(date -d @$EPOCH_CURR +%Y%m%d)
+	YEAR_CURR=$(date -u -d @$EPOCH_CURR +%Y)
+	MONTH_CURR=$(date -u -d @$EPOCH_CURR +%m)
+	DAY_CURR=$(date -u -d @$EPOCH_CURR +%d)
+	HOUR_CURR=$(date -u -d @$EPOCH_CURR +%H)
+	DATE_CURR=$(date -u -d @$EPOCH_CURR +%Y%m%d)
 	echo "Curr: $DATE_CURR"
 
 	# Download files
@@ -27,7 +27,7 @@ do
 	wait %1 %2 %3
 
 	# Increase DELTA hours
-	let EPOCH_CURR=$(date -d @$EPOCH_CURR +%s)+$DELTA_SEC
+	let EPOCH_CURR=$(date -u -d @$EPOCH_CURR +%s)+$DELTA_SEC
 	let "i=$i+$DELTA_HOURS"
 done
 

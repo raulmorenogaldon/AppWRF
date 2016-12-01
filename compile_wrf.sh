@@ -31,8 +31,8 @@ export MPI_LIB=-L/$MPI_LIB
 
 echo "--------------------------------"
 echo "Configuration:"
-echo "Start date: "$(date -d @$CFG_START_DATE)
-echo "End   date: "$(date -d @$CFG_END_DATE)
+echo "Start date: "$(date -u -d @$CFG_START_DATE)
+echo "End   date: "$(date -u -d @$CFG_END_DATE)
 echo "Ref lat: "$CFG_REF_LAT
 echo "Ref lon: "$CFG_REF_LON
 
@@ -51,7 +51,7 @@ echo "--------------------------------"
 echo "Compiling WRF..."
 cd $WRF
 ./configure > wrf_configure.log 2>&1
-./compile -j 1 wrf > wrf_compile.log 2>&1
+./compile -j [[[#CPUS]]] wrf > wrf_compile.log 2>&1
 ./compile em_real > em_real_compile.log 2>&1
 
 # Copy namelist.input
@@ -63,7 +63,7 @@ cp ../namelist.wrf.template ./namelist.input
 echo "--------------------------------"
 echo "Compiling WPS..."
 cd $WPS
-./configure > wrf_configure.log 2>&1
+./configure > wps_configure.log 2>&1
 ./compile > wps_compile.log 2>&1
 
 # Copy namelist.wps
