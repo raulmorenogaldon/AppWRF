@@ -44,6 +44,8 @@ cd [[[#INPUTPATH]]]
 if [ -f *.tar.bz2 ]; then
 	tar jxf *.tar.bz2
 	rm *.tar.bz2
+	mv geog/* .
+	rm -rf geog
 fi
 
 # WRF compile
