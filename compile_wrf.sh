@@ -35,8 +35,10 @@ echo "--------------------------------"
 echo "Extracting static geographic data..."
 #ln -s /home/rmoreno2/GEOG_DATA/geog/* [[[#INPUTPATH]]]/
 cd [[[#INPUTPATH]]]
-tar jxf *.tar.bz2
-rm *.tar.bz2
+if [ -f *.tar.bz2 ]; then
+	tar jxf *.tar.bz2
+	rm *.tar.bz2
+fi
 
 # WRF compile
 echo "--------------------------------"
