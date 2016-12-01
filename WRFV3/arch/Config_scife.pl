@@ -395,9 +395,9 @@ until ( $validresponse ) {
   #printf "\nEnter selection [%d-%d] : ",1,$opt ;
   $compiler = $ENV{'COMPILER'};
   if ( $compiler eq 'intel' )
-  { $response = 16 ; }
+  { $response = 15 ; }
   else
-  { $response = 35 ; }
+  { $response = 34 ; }
   printf "\nSelection : %d\n", $response ;
 
   if ( $response == -1 ) { exit ; }
