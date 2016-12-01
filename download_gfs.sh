@@ -16,7 +16,7 @@ do
 	DAY_CURR=$(date -u -d @$EPOCH_CURR +%d)
 	HOUR_CURR=$(date -u -d @$EPOCH_CURR +%H)
 	DATE_CURR=$(date -u -d @$EPOCH_CURR +%Y%m%d)
-	echo "Curr: $DATE_CURR"
+	echo "Curr: ${DATE_CURR}${HOUR_CURR}"
 
 	# Download files
 	wget -nv -O GRIB${DATE_CURR}${HOUR_CURR}_00 "ftp://nomads.ncdc.noaa.gov/GFS/analysis_only/${YEAR_CURR}${MONTH_CURR}/${YEAR_CURR}${MONTH_CURR}${DAY_CURR}/gfsanl_4_${DATE_CURR}_${HOUR_CURR}00_000.grb2" &

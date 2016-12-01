@@ -133,7 +133,12 @@ until ($validresponse)
    $opt --;
 
    printf "\nEnter selection [%d-%d] : ", 1, $opt;
-   $response = 3;
+   $compiler = $ENV{'COMPILER'};
+   if ( $compiler eq 'intel' )
+   { $response = 19 ; }
+   else
+   { $response = 3 ; }
+   printf "\nSelection : %d\n", $response ;
    if($response == -1) {exit;}
    if($response >= 1 && $response <= $opt) 
    {
