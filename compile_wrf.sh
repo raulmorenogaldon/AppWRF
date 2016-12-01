@@ -25,9 +25,9 @@ echo "Setting WRFIO_NCD_LARGE_FILE_SUPPORT..."
 export WRFIO_NCD_LARGE_FILE_SUPPORT=1
 echo "Setting MPI_LIB..."
 export MPI_LIB=-L/$MPI_LIB
-echo "Setting JASPER paths..."
-export JASPERLIB='[[[#LIBPATH]]]/lib'
-export JASPERINC='[[[#LIBPATH]]]/include'
+#echo "Setting JASPER paths..."
+#export JASPERLIB='[[[#LIBPATH]]]/lib'
+#export JASPERINC='[[[#LIBPATH]]]/include'
 
 echo "--------------------------------"
 echo "Configuration:"
@@ -54,6 +54,11 @@ cd $WRF
 ./compile -j 1 wrf > wrf_compile.log 2>&1
 ./compile em_real > em_real_compile.log 2>&1
 
+# Copy namelist.input
+echo "--------------------------------"
+echo "Copying namelist.input ..."
+cp ../namelist.wrf.template ./namelist.input
+
 # WPS compile
 echo "--------------------------------"
 echo "Compiling WPS..."
@@ -64,7 +69,7 @@ cd $WPS
 # Copy namelist.wps
 echo "--------------------------------"
 echo "Copying namelist.wps ..."
-cp ../namelist.wps .
+cp ../namelist.wps.template ./namelist.wps
 
 # Download GRIB files into WPS folder
 echo "--------------------------------"
