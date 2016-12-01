@@ -25,6 +25,12 @@ echo "Setting WRFIO_NCD_LARGE_FILE_SUPPORT..."
 export WRFIO_NCD_LARGE_FILE_SUPPORT=1
 echo "Setting MPI_LIB..."
 export MPI_LIB=-L/$MPI_LIB
+echo "Setting JASPER paths..."
+export JASPERLIB='[[[#LIBPATH]]]/lib'
+export JASPERINC='[[[#LIBPATH]]]/include'
+
+echo "--------------------------------"
+echo "Configuration:"
 echo "Start date: "$(date -d @$CFG_START_DATE)
 echo "End   date: "$(date -d @$CFG_END_DATE)
 echo "Ref lat: "$CFG_REF_LAT
