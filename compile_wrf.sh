@@ -54,11 +54,6 @@ cd $WRF
 ./compile -j [[[#CPUS]]] wrf > wrf_compile.log 2>&1
 ./compile em_real > em_real_compile.log 2>&1
 
-# Copy namelist.input
-echo "--------------------------------"
-echo "Copying namelist.input ..."
-cp ../namelist.wrf.template ./namelist.input
-
 # WPS compile
 echo "--------------------------------"
 echo "Compiling WPS..."
@@ -66,41 +61,10 @@ cd $WPS
 ./configure > wps_configure.log 2>&1
 ./compile > wps_compile.log 2>&1
 
-# Copy namelist.wps
-echo "--------------------------------"
-echo "Copying namelist.wps ..."
-cp ../namelist.wps.template ./namelist.wps
-
 # Download GRIB files into WPS folder
 echo "--------------------------------"
 echo "Downloading GRIB files..."
 ../download_gfs.sh
-
-# Execute geogrid
-echo "--------------------------------"
-echo "Executing geogrid..."
-./geogrid.exe
-
-# Set GFS Vtable
-echo "--------------------------------"
-echo "Linking GFS Vtable..."
-ln -s ungrib/Variable_Tables/Vtable.GFS Vtable
-
-# Ungrib files
-echo "--------------------------------"
-echo "Executing ungrib..."
-./link_grib.csh GRIB*
-./ungrib.exe
-
-# Metgrid
-echo "--------------------------------"
-echo "Executing metgrib..."
-./metgrid.exe
-
-echo "--------------------------------"
-echo "Generated:"
-find . -maxdepth 1 -type f -name "met_em*"
-find . -maxdepth 1 -type f -name "geo_em*"
 
 echo "--------------------------------"
 echo "DONE!"
