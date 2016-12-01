@@ -1,50 +1,32 @@
 #!/bin/sh
-# $1: Initial DAY (format yyyymmdd)
-# $2: Initial HOUR (00, 06, 12, 18)
-# $3: End DAY (format yyyymmdd)
-# $4: End HOUR (00, 06, 12, 18)
-# $5: Left longitude
-# $6: Right longitude
-# $7: Top latitude
-# $8: Bottom latitude
-
-# Initial and end dates
-DAY_INI=$1
-HOUR_INI=$2
-DATE_INI="${DAY_INI} ${HOUR_INI}"
-
-DAY_END=$3
-HOUR_END=$4
-DATE_END="${DAY_END} ${HOUR_END}"
-
-# Coordinates
-LEFT_LON=$5
-RIGHT_LON=$6
-TOP_LAT=$7
-BOTTOM_LAT=$8
 
 # Delta hours
-DELTA_HOURS=3
+DELTA_HOURS=6
 DELTA_SEC=$(expr $DELTA_HOURS \* 3600)
 
 # Iterate hours
-ZHOUR_INI=$(date -d "$HOUR_INI" +%H)
-ZDATE_INI=$(date -d "$DATE_INI" +%Y%m%d%H)
-EPOCH_END=$(date -d "$DATE_END" +%s)
-EPOCH_CURR=$(date -d "$DATE_INI" +%s)
+EPOCH_END=$CFG_END_DATE
+EPOCH_CURR=$CFG_START_DATE
 i=0
-while [ $EPOCH_CURR -le $EPOCH_END ]
+while [ $EPOCH_CURR -le $EPOCH_END  ]
 do
 	# Date
-	DATE_CURR=$(date -d @$EPOCH_CURR +%Y%m%d%H)
+	YEAR_CURR=$(date -d @$EPOCH_CURR +%Y)
+	MONTH_CURR=$(date -d @$EPOCH_CURR +%m)
+	DAY_CURR=$(date -d @$EPOCH_CURR +%d)
 	HOUR_CURR=$(date -d @$EPOCH_CURR +%H)
+	DATE_CURR=$(date -d @$EPOCH_CURR +%Y%m%d)
 	echo "Curr: $DATE_CURR"
 
-	# Download file
-	p=`printf "%03i" $i`
-	wget -nv -O GRIB${DATE_CURR} "http://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl?file=gfs.t${ZHOUR_INI}""z.pgrb2.0p25.f$p&all_lev=on&all_var=on&subregion=&leftlon=${LEFT_LON}&rightlon=${RIGHT_LON}&toplat=${TOP_LAT}&bottomlat=${BOTTOM_LAT}&dir=%2Fgfs.${ZDATE_INI}"
+	# Download files
+	wget -nv -O GRIB${DATE_CURR}${HOUR_CURR}_00 "ftp://nomads.ncdc.noaa.gov/GFS/analysis_only/${YEAR_CURR}${MONTH_CURR}/${YEAR_CURR}${MONTH_CURR}${DAY_CURR}/gfsanl_4_${DATE_CURR}_${HOUR_CURR}00_000.grb2" &
+	wget -nv -O GRIB${DATE_CURR}${HOUR_CURR}_03 "ftp://nomads.ncdc.noaa.gov/GFS/analysis_only/${YEAR_CURR}${MONTH_CURR}/${YEAR_CURR}${MONTH_CURR}${DAY_CURR}/gfsanl_4_${DATE_CURR}_${HOUR_CURR}00_003.grb2" &
+	wget -nv -O GRIB${DATE_CURR}${HOUR_CURR}_06 "ftp://nomads.ncdc.noaa.gov/GFS/analysis_only/${YEAR_CURR}${MONTH_CURR}/${YEAR_CURR}${MONTH_CURR}${DAY_CURR}/gfsanl_4_${DATE_CURR}_${HOUR_CURR}00_006.grb2" &
 
-	# Increase 3 hours
+	# Wait downloads
+	wait %1 %2 %3
+
+	# Increase DELTA hours
 	let EPOCH_CURR=$(date -d @$EPOCH_CURR +%s)+$DELTA_SEC
 	let "i=$i+$DELTA_HOURS"
 done

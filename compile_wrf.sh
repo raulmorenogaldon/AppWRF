@@ -14,26 +14,26 @@ else
 	export COMPILER=gnu
 fi
 
+# Set error trap
+set -e
+
 # Set env
 echo "--------------------------------"
+echo "Loading environment variables..."
+. ./configure_env.env
 echo "Setting WRFIO_NCD_LARGE_FILE_SUPPORT..."
 export WRFIO_NCD_LARGE_FILE_SUPPORT=1
 echo "Setting MPI_LIB..."
 export MPI_LIB=-L/$MPI_LIB
-
-# Set error trap
-set -e
-
-# Setup environment
-echo "--------------------------------"
-echo "Setup environment..."
-. ./configure_env.env
-./setup.sh $CFG_CENTER_LAT $CFG_CENTER_LON 100 $CFG_BOUNDS_HEIGHT $CFG_BOUNDS_WIDTH $CFG_DATE_INI"_"$CFG_HOUR_INI $CFG_DATE_END"_"$CFG_HOUR_END $CFG_INPUTPATH
-. ./BOUNDS.env
+echo "Start date: "$(date -d @$CFG_START_DATE)
+echo "End   date: "$(date -d @$CFG_END_DATE)
+echo "Ref lat: "$CFG_REF_LAT
+echo "Ref lon: "$CFG_REF_LON
 
 # Extract geographic data from input
 echo "--------------------------------"
 echo "Extracting static geographic data..."
+#ln -s /home/rmoreno2/GEOG_DATA/geog/* [[[#INPUTPATH]]]/
 cd [[[#INPUTPATH]]]
 tar jxf *.tar.bz2
 rm *.tar.bz2
@@ -61,7 +61,7 @@ cp ../namelist.wps .
 # Download GRIB files into WPS folder
 echo "--------------------------------"
 echo "Downloading GRIB files..."
-../download_gfs.sh $CFG_DATE_INI $CFG_HOUR_INI $CFG_DATE_END $CFG_HOUR_END $CFG_BOUNDS_L_LON $CFG_BOUNDS_R_LON $CFG_BOUNDS_T_LAT $CFG_BOUNDS_B_LAT
+../download_gfs.sh
 
 # Execute geogrid
 echo "--------------------------------"
