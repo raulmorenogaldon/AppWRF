@@ -20,51 +20,30 @@ echo "Ref lon: "$CFG_REF_LON
 
 # Copy namelists
 echo "--------------------------------"
-echo "Copying namelists ..."
-cp namelist.wps.template $WPS/namelist.wps
+echo "Copying namelist.input ..."
 cp namelist.wrf.template $WRF/run/namelist.input
 
 # Change dir
-cd $WPS
-
-# Execute geogrid
-echo "--------------------------------"
-echo "Executing geogrid..."
-mpiexec -n [[[#TOTALCPUS]]] ./geogrid.exe
-
-# Set GFS Vtable
-echo "--------------------------------"
-echo "Linking GFS Vtable..."
-ln -s ungrib/Variable_Tables/Vtable.GFS Vtable
-
-# Ungrib files
-echo "--------------------------------"
-echo "Executing ungrib..."
-./link_grib.csh GRIB*
-./ungrib.exe
-
-# Metgrid
-echo "--------------------------------"
-echo "Executing metgrid..."
-mpiexec -n [[[#TOTALCPUS]]] ./metgrid.exe
-
-echo "--------------------------------"
-echo "Generated:"
-find . -maxdepth 1 -type f -name "met_em*"
-find . -maxdepth 1 -type f -name "geo_em*"
-
-# Change dir
 cd $WRF/run
+
+# Print namelist
+echo "--------------------------------"
+echo "namelist.input:"
+cat ./namelist.input
 
 # Link met_em files
 echo "--------------------------------"
 echo "Linking WPS generated files..."
 ln -s $WPS/met_em* .
 
+echo "--------------------------------"
+echo "Present files:"
+find . -maxdepth 1 -type f -name "met_em*"
+
 # Execute real
 echo "--------------------------------"
 echo "Executing EM_REAL..."
-mpiexec -n [[[#TOTALCPUS]]] bash -c "ulimit -s unlimited && ./real.exe"
+mpiexec -n [[[#CPUS]]] bash -c "ulimit -s unlimited && ./real.exe"
 
 # Execute WRF
 echo "--------------------------------"

@@ -36,6 +36,15 @@ echo "End   date: "$(date -u -d @$CFG_END_DATE)
 echo "Ref lat: "$CFG_REF_LAT
 echo "Ref lon: "$CFG_REF_LON
 
+echo "--------------------------------"
+echo "Copying namelist.wps ..."
+cp namelist.wps.template $WPS/namelist.wps
+
+# Print namelist
+echo "--------------------------------"
+echo "namelist.wps:"
+cat $WPS/namelist.wps
+
 # Extract geographic data from input
 echo "--------------------------------"
 echo "Extracting static geographic data..."
@@ -67,6 +76,32 @@ cd $WPS
 echo "--------------------------------"
 echo "Downloading GRIB files..."
 ../download_gfs.sh
+
+# Execute geogrid
+echo "--------------------------------"
+echo "Executing geogrid..."
+mpiexec -n [[[#CPUS]]] ./geogrid.exe
+
+# Set GFS Vtable
+echo "--------------------------------"
+echo "Linking GFS Vtable..."
+ln -s ungrib/Variable_Tables/Vtable.GFS Vtable
+
+# Ungrib files
+echo "--------------------------------"
+echo "Executing ungrib..."
+./link_grib.csh GRIB*
+./ungrib.exe
+
+# Metgrid
+echo "--------------------------------"
+echo "Executing metgrid..."
+mpiexec -n [[[#CPUS]]] ./metgrid.exe
+
+echo "--------------------------------"
+echo "Generated:"
+find . -maxdepth 1 -type f -name "met_em*"
+find . -maxdepth 1 -type f -name "geo_em*"
 
 echo "--------------------------------"
 echo "DONE!"
