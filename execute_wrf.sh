@@ -45,7 +45,7 @@ echo "Executing ungrib..."
 
 # Metgrid
 echo "--------------------------------"
-echo "Executing metgrib..."
+echo "Executing metgrid..."
 mpiexec -n [[[#TOTALCPUS]]] ./metgrid.exe
 
 echo "--------------------------------"
