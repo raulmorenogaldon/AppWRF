@@ -1,3 +1,3 @@
 {
-	"poll_logs": ['*.log', 'rsl.out.*']
+	"poll_logs": ["*.log", "rsl.out.*"]
 }
