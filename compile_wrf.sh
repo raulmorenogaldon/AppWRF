@@ -14,9 +14,6 @@ else
 	export COMPILER=gnu
 fi
 
-# Set error trap
-set -e
-
 # Set env
 echo "--------------------------------"
 echo "Loading environment variables..."
@@ -25,9 +22,6 @@ echo "Setting WRFIO_NCD_LARGE_FILE_SUPPORT..."
 export WRFIO_NCD_LARGE_FILE_SUPPORT=1
 echo "Setting MPI_LIB..."
 export MPI_LIB=-L/$MPI_LIB
-#echo "Setting JASPER paths..."
-#export JASPERLIB='[[[#LIBPATH]]]/lib'
-#export JASPERINC='[[[#LIBPATH]]]/include'
 
 echo "--------------------------------"
 echo "Configuration:"
@@ -38,7 +32,7 @@ echo "Ref lon: "$CFG_REF_LON
 
 echo "--------------------------------"
 echo "Copying namelist.wps ..."
-cp namelist.wps.template $WPS/namelist.wps
+cp namelist.wps.template $WPS/namelist.wps || exit 1
 
 # Print namelist
 echo "--------------------------------"
@@ -61,42 +55,42 @@ fi
 echo "--------------------------------"
 echo "Compiling WRF..."
 cd $WRF
-./configure > wrf_configure.log 2>&1
-./compile -j [[[#CPUS]]] wrf > wrf_compile.log 2>&1
-./compile em_real > em_real_compile.log 2>&1
+./configure > wrf_configure.log 2>&1 || exit 1
+./compile -j [[[#CPUS]]] wrf > wrf_compile.log 2>&1 || exit 1
+./compile em_real > em_real_compile.log 2>&1 || exit 1
 
 # WPS compile
 echo "--------------------------------"
 echo "Compiling WPS..."
 cd $WPS
-./configure > wps_configure.log 2>&1
-./compile > wps_compile.log 2>&1
+./configure > wps_configure.log 2>&1 || exit 1
+./compile > wps_compile.log 2>&1 || exit 1
 
 # Download GRIB files into WPS folder
 echo "--------------------------------"
 echo "Downloading GRIB files..."
-../download_gfs.sh
+../download_gfs.sh || exit 1
 
 # Execute geogrid
 echo "--------------------------------"
 echo "Executing geogrid..."
-mpiexec -n [[[#CPUS]]] ./geogrid.exe
+mpiexec -n [[[#CPUS]]] ./geogrid.exe || exit 1
 
 # Set GFS Vtable
 echo "--------------------------------"
 echo "Linking GFS Vtable..."
-ln -s ungrib/Variable_Tables/Vtable.GFS Vtable
+ln -s ungrib/Variable_Tables/Vtable.GFS Vtable || exit 1
 
 # Ungrib files
 echo "--------------------------------"
 echo "Executing ungrib..."
-./link_grib.csh GRIB*
-./ungrib.exe
+./link_grib.csh GRIB* || exit 1
+./ungrib.exe || exit 1
 
 # Metgrid
 echo "--------------------------------"
 echo "Executing metgrid..."
-mpiexec -n [[[#CPUS]]] ./metgrid.exe
+mpiexec -n [[[#CPUS]]] ./metgrid.exe || exit 1
 
 echo "--------------------------------"
 echo "Generated:"

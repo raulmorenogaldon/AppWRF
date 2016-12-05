@@ -5,9 +5,6 @@ WPS=$PWD/WPS
 
 echo "================================"
 
-# Error checking
-set -e
-
 # Load configuration
 . ./configure_env.env
 
@@ -21,7 +18,7 @@ echo "Ref lon: "$CFG_REF_LON
 # Copy namelists
 echo "--------------------------------"
 echo "Copying namelist.input ..."
-cp namelist.wrf.template $WRF/run/namelist.input
+cp namelist.wrf.template $WRF/run/namelist.input || exit 1
 
 # Change dir
 cd $WRF/run
@@ -34,7 +31,7 @@ cat ./namelist.input
 # Link met_em files
 echo "--------------------------------"
 echo "Linking WPS generated files..."
-ln -s $WPS/met_em* .
+ln -s $WPS/met_em* . || exit 1
 
 echo "--------------------------------"
 echo "Present files:"
@@ -43,12 +40,12 @@ find . -maxdepth 1 -type f -name "met_em*"
 # Execute real
 echo "--------------------------------"
 echo "Executing EM_REAL..."
-mpiexec -n [[[#CPUS]]] bash -c "ulimit -s unlimited && ./real.exe"
+mpiexec -n [[[#CPUS]]] bash -c "ulimit -s unlimited && ./real.exe" || exit 1
 
 # Execute WRF
 echo "--------------------------------"
 echo "Executing WRF..."
-mpiexec -n [[[#TOTALCPUS]]] bash -c "ulimit -s unlimited && ./wrf.exe"
+mpiexec -n [[[#TOTALCPUS]]] bash -c "ulimit -s unlimited && ./wrf.exe" || exit 1
 
 echo "--------------------------------"
 echo "DONE!"
