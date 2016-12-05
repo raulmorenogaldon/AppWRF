@@ -31,7 +31,7 @@ cat ./namelist.input
 # Link met_em files
 echo "--------------------------------"
 echo "Linking WPS generated files..."
-ln -s $WPS/met_em* . || exit 1
+ln -s $WPS/met_em* .
 
 echo "--------------------------------"
 echo "Present files:"
