@@ -40,12 +40,25 @@ find . -maxdepth 1 -type f -name "met_em*"
 # Execute real
 echo "--------------------------------"
 echo "Executing EM_REAL..."
-mpiexec -n [[[#CPUS]]] bash -c "ulimit -s unlimited && ./real.exe" || exit 1
+mpiexec -n [[[#CPUS]]] bash -c "set -e && ulimit -s unlimited && ./real.exe" || {
+	echo "WRF failed with code: $?"
+	ln -s $WRF/run/wrf* [[[#OUTPUTPATH]]]/
+	exit 1
+}
 
 # Execute WRF
 echo "--------------------------------"
 echo "Executing WRF..."
-mpiexec -n [[[#TOTALCPUS]]] bash -c "ulimit -s unlimited && ./wrf.exe" || exit 1
+mpiexec -n [[[#TOTALCPUS]]] bash -c "set -e && ulimit -s unlimited && ./wrf.exe" {
+	echo "EM_REAL failed with code: $?"
+	ln -s $WRF/run/wrf* [[[#OUTPUTPATH]]]/
+	exit 1
+}
+
+# Copying
+echo "--------------------------------"
+echo "Copying output files..."
+ln -s $WRF/run/wrf* [[[#OUTPUTPATH]]]/
 
 echo "--------------------------------"
 echo "DONE!"
