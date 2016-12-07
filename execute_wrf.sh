@@ -19,6 +19,7 @@ echo "Ref lon: "$CFG_REF_LON
 echo "--------------------------------"
 echo "Copying namelist.input ..."
 cp namelist.wrf.template $WRF/run/namelist.input || exit 1
+cp $WRF/run/namelist.input [[[#OUTPUTPATH]]]/
 
 # Change dir
 cd $WRF/run
@@ -42,7 +43,12 @@ echo "--------------------------------"
 echo "Executing EM_REAL..."
 mpiexec -n [[[#CPUS]]] bash -c "set -e && ulimit -s unlimited && ./real.exe" || {
 	echo "WRF failed with code: $?"
-	ln -s $WRF/run/wrf* [[[#OUTPUTPATH]]]/
+	# Remove special characters
+	for file in wrfout* ; do echo mv $file $(echo $file | sed 's/:/_/g'); done
+	for file in wrfrst* ; do echo mv $file $(echo $file | sed 's/:/_/g'); done
+	# Copy to output
+	ln -s $WRF/run/wrfout* [[[#OUTPUTPATH]]]/
+	ln -s $WRF/run/wrfrst* [[[#OUTPUTPATH]]]/
 	exit 1
 }
 
@@ -51,14 +57,24 @@ echo "--------------------------------"
 echo "Executing WRF..."
 mpiexec -n [[[#TOTALCPUS]]] bash -c "set -e && ulimit -s unlimited && ./wrf.exe" {
 	echo "EM_REAL failed with code: $?"
-	ln -s $WRF/run/wrf* [[[#OUTPUTPATH]]]/
+	# Remove special characters
+	for file in wrfout* ; do echo mv $file $(echo $file | sed 's/:/_/g'); done
+	for file in wrfrst* ; do echo mv $file $(echo $file | sed 's/:/_/g'); done
+	# Copy to output
+	ln -s $WRF/run/wrfout* [[[#OUTPUTPATH]]]/
+	ln -s $WRF/run/wrfrst* [[[#OUTPUTPATH]]]/
 	exit 1
 }
 
 # Copying
 echo "--------------------------------"
 echo "Copying output files..."
-ln -s $WRF/run/wrf* [[[#OUTPUTPATH]]]/
+# Remove special characters
+for file in wrfout* ; do echo mv $file $(echo $file | sed 's/:/_/g'); done
+for file in wrfrst* ; do echo mv $file $(echo $file | sed 's/:/_/g'); done
+# Copy to output
+ln -s $WRF/run/wrfout* [[[#OUTPUTPATH]]]/
+ln -s $WRF/run/wrfrst* [[[#OUTPUTPATH]]]/
 
 echo "--------------------------------"
 echo "DONE!"

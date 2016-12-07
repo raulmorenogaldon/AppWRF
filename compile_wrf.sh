@@ -33,6 +33,7 @@ echo "Ref lon: "$CFG_REF_LON
 echo "--------------------------------"
 echo "Copying namelist.wps ..."
 cp namelist.wps.template $WPS/namelist.wps || exit 1
+cp $WPS/namelist.wps [[[#OUTPUTPATH]]]/
 
 # Print namelist
 echo "--------------------------------"
