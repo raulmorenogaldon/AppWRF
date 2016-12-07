@@ -19,9 +19,9 @@ do
 	echo "Curr: ${DATE_CURR}${HOUR_CURR}"
 
 	# Download files
-	wget -nv -O GRIB${DATE_CURR}${HOUR_CURR}_00 "ftp://nomads.ncdc.noaa.gov/GFS/analysis_only/${YEAR_CURR}${MONTH_CURR}/${YEAR_CURR}${MONTH_CURR}${DAY_CURR}/gfsanl_4_${DATE_CURR}_${HOUR_CURR}00_000.grb2" &
-	wget -nv -O GRIB${DATE_CURR}${HOUR_CURR}_03 "ftp://nomads.ncdc.noaa.gov/GFS/analysis_only/${YEAR_CURR}${MONTH_CURR}/${YEAR_CURR}${MONTH_CURR}${DAY_CURR}/gfsanl_4_${DATE_CURR}_${HOUR_CURR}00_003.grb2" &
-	wget -nv -O GRIB${DATE_CURR}${HOUR_CURR}_06 "ftp://nomads.ncdc.noaa.gov/GFS/analysis_only/${YEAR_CURR}${MONTH_CURR}/${YEAR_CURR}${MONTH_CURR}${DAY_CURR}/gfsanl_4_${DATE_CURR}_${HOUR_CURR}00_006.grb2" &
+	for i in {1..20}; do wget -nv -O GRIB${DATE_CURR}${HOUR_CURR}_00 "ftp://nomads.ncdc.noaa.gov/GFS/analysis_only/${YEAR_CURR}${MONTH_CURR}/${YEAR_CURR}${MONTH_CURR}${DAY_CURR}/gfsanl_4_${DATE_CURR}_${HOUR_CURR}00_000.grb2" && break || sleep 15; done &
+	for i in {1..20}; do wget -nv -O GRIB${DATE_CURR}${HOUR_CURR}_03 "ftp://nomads.ncdc.noaa.gov/GFS/analysis_only/${YEAR_CURR}${MONTH_CURR}/${YEAR_CURR}${MONTH_CURR}${DAY_CURR}/gfsanl_4_${DATE_CURR}_${HOUR_CURR}00_003.grb2" && break || sleep 15; done &
+	for i in {1..20}; do wget -nv -O GRIB${DATE_CURR}${HOUR_CURR}_06 "ftp://nomads.ncdc.noaa.gov/GFS/analysis_only/${YEAR_CURR}${MONTH_CURR}/${YEAR_CURR}${MONTH_CURR}${DAY_CURR}/gfsanl_4_${DATE_CURR}_${HOUR_CURR}00_006.grb2" && break || sleep 15; done &
 
 	# Wait downloads
 	wait %1 %2 %3
