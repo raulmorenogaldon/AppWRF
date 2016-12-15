@@ -55,7 +55,7 @@ mpiexec -n [[[#CPUS]]] bash -c "set -e && ulimit -s unlimited && ./real.exe" || 
 # Execute WRF
 echo "--------------------------------"
 echo "Executing WRF..."
-mpiexec -n [[[#TOTALCPUS]]] bash -c "set -e && ulimit -s unlimited && ./wrf.exe" {
+mpiexec -n [[[#TOTALCPUS]]] bash -c "set -e && ulimit -s unlimited && ./wrf.exe" || {
 	echo "EM_REAL failed with code: $?"
 	# Remove special characters
 	for file in wrfout* ; do echo mv $file $(echo $file | sed 's/:/_/g'); done
