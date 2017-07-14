@@ -44,7 +44,8 @@ if  test -z "$NETCDF"  ; then
     bedone=""
     if [ -d ./netcdf_links ] ; then
       echo '** There is an existing ./netcdf_links file. Should I use? [y]'
-      read resp
+      #read resp
+      resp="y"
       if [ "$resp" = "y" ] ; then
         NETCDF=`pwd`/netcdf_links
         bedone="yes"
@@ -59,7 +60,8 @@ if  test -z "$NETCDF"  ; then
     netcdfipath=""
     netcdflpath=""
     while [ -z "$bedone" ] ; do 
-      read resp
+      #read resp
+      resp="y"
       if [ "$resp" = "y" -o -z "$resp" ]  ; then
         if [ -d ./netcdf_links ] ; then
           echo 'There is already a ./netcdf_links directory. Okay to use links'
@@ -74,7 +76,8 @@ if  test -z "$NETCDF"  ; then
         fi
         if [ -z "$netcdfipath" ] ; then
           echo 'Enter full path to NetCDF include directory on your system'
-          read resp
+          #read resp
+          resp="/usr/include"
           if [ ! -d "$resp" ] ; then
             echo "invalid path: $resp. Try again? [y]" ; continue
           fi
@@ -82,7 +85,8 @@ if  test -z "$NETCDF"  ; then
         fi
         if  [ -z "$netcdflpath" ] ; then
           echo 'Enter full path to NetCDF library directory on your system'
-          read resp
+          #read resp
+          resp="/usr/lib64"
           if [ ! -d "$resp" ] ; then
             echo "invalid path: $resp. Try again? [y]" ; continue
           fi
@@ -92,7 +96,8 @@ if  test -z "$NETCDF"  ; then
         if [ -n "$netcdflpath" -a -n "$netcdfipath" ] ; then
           if [ -d ./netcdf_links ] ; then
             echo 'Existing ./netcdf_links directory. Okay to remove. [y]'
-            read resp
+            #read resp
+            resp="n"
             if [ "$resp" = "y" ]  ; then
               /bin/rm -fr ./netcdf_links
             fi
