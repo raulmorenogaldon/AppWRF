@@ -51,6 +51,12 @@ if [ -f *.tar.bz2 ]; then
 	mv geog/* .
 	rm -rf geog
 fi
+if [ -f *.tar.gz ]; then
+	tar zxf *.tar.gz
+	rm *.tar.gz
+	mv geog/* .
+	rm -rf geog
+fi
 
 # WRF compile
 echo "--------------------------------"
